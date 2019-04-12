@@ -1,68 +1,69 @@
 ### English introduction
 Please view [README.md](https://github.com/Binaryify/vue-tetris/blob/master/README-EN.md)
 
-## 用Vue、Vuex 做俄罗斯方块
+## Doing Tetris with Vue and Vuex
 
 ----
-本项目灵感来源于 React 版的[俄罗斯方块](https://github.com/chvin/react-tetris),由于对其实现原理较感兴趣,而且相比于 React 更喜欢 Vue, 于是把 React 版的重构为了 Vue 版的,大致思路是把组件当成一个个函数,保证一个输入(props)能得到一个确定的输出(view),然后对不同方法也是做同样处理,对于 Redux 使用 Vuex 精简化
+The project was inspired by the React version of [Tetris] (https://github.com/chvin/react-tetris), which is more interested in its implementation principles and prefers Vue compared to React, so the React version Refactoring for the Vue version, the general idea is to treat the components as a function, to ensure that a single input (props) can get a certain output (view), and then do the same for different methods, using Vuex for Redux
 
-戳：[http://binaryify.github.io/vue-tetris/?lan=zh](http://binaryify.github.io/vue-tetris/?lan=zh) 玩一玩！
+Poke: [http://binaryify.github.io/vue-tetris/?lan=zh](http://binaryify.github.io/vue-tetris/?lan=zh) Play it!
 
 ----
-### 效果预览
-![效果预览](https://img.alicdn.com/tps/TB1Ag7CNXXXXXaoXXXXXXXXXXXX-320-483.gif)
+### Effect preview
+![Effect preview] (https://img.alicdn.com/tps/TB1Ag7CNXXXXXaoXXXXXXXXXXXX-320-483.gif)
 
-正常速度的录制，体验流畅。
+Recording at normal speed, the experience is smooth.
 
-### 响应式
-![响应式](https://img.alicdn.com/tps/TB1AdjZNXXXXXcCapXXXXXXXXXX-480-343.gif)
+### responsive
+![Responsive](https://img.alicdn.com/tps/TB1AdjZNXXXXXcCapXXXXXXXXXX-480-343.gif)
 
-不仅指屏幕的自适应，而是`在PC使用键盘、在手机使用手指的响应式操作`：
+Not only refers to the adaptation of the screen, but to the responsive operation of using the keyboard on the PC and using the finger on the mobile phone:
 
-![手机](https://img.alicdn.com/tps/TB1kvJyOVXXXXbhaFXXXXXXXXXX-320-555.gif)
+![Mobile Phone](https://img.alicdn.com/tps/TB1kvJyOVXXXXbhaFXXXXXXXXXX-320-555.gif)
 
-### 数据持久化
+### Data persistence
 
-[视频](http://static.binaryify.com/persistence.mp4)
+[Video] (http://static.binaryify.com/persistence.mp4)
 
-玩单机游戏最怕什么？断电。通过订阅 `store.subscribe`，将state储存在localStorage，精确记录所有状态。网页关了刷新了、程序崩溃了、手机没电了，重新打开连接，都可以继续。
+What are you most afraid of playing stand-alone games? Power off. Store the state in localStorage by subscribing to `store.subscribe` to accurately record all states. The webpage is closed, the program crashes, the phone is dead, and the connection is reopened.
 
-### Vuex 状态预览（[Vue DevTools extension](https://github.com/vuejs/vue-devtools)）
+### Vuex Status Preview ([Vue DevTools extension](https://github.com/vuejs/vue-devtools))
 ![preview](http://static.binaryify.com/vuex.gif)
 
-[视频](http://static.binaryify.com/vuex.mp4)
+[Video] (http://static.binaryify.com/vuex.mp4)
 
-Vuex 设计管理了所有应存的状态，这是上面持久化的保证。
+The Vuex design manages all the state of the persistence, which is a guarantee of persistence above.
 
 ----
-游戏框架使用的是 [Vue](https://github.com/vuejs/vue) + [Vuex](https://github.com/vuejs/vuex)
+The game framework uses [Vue](https://github.com/vuejs/vue) + [Vuex](https://github.com/vuejs/vuex)
 
 
 
 
 
-## 1、Web Audio Api
-游戏里有很多不同的音效，而实际上只引用了一个音效文件：[/build/music.mp3](https://github.com/Binaryify/vue-tetris/blob/master/build/music.mp3)。借助`Web Audio Api`能够以毫秒级精确、高频率的播放音效，这是`<audio>`标签所做不到的。在游戏进行中按住方向键移动方块，便可以听到高频率的音效。
 
-![网页音效进阶](https://img.alicdn.com/tps/TB1fYgzNXXXXXXnXpXXXXXXXXXX-633-358.png)
+## 1, Web Audio Api
+There are a lot of different sound effects in the game, but actually only one sound file is referenced: [/build/music.mp3](https://github.com/Binaryify/vue-tetris/blob/master/build/music.mp3 ). With the 'Web Audio Api`, you can play sounds with millisecond precision and high frequency, which is not possible with the `<audio>` tag. While holding the arrow keys while the game is in progress, you can hear high-frequency sound effects.
 
-`WAA` 是一套全新的相对独立的接口系统，对音频文件拥有更高的处理权限以及更专业的内置音频效果，是W3C的推荐接口，能专业处理“音速、音量、环境、音色可视化、高频、音向”等需求，下图介绍了WAA的使用流程。
+![Web Sound Advanced] (https://img.alicdn.com/tps/TB1fYgzNXXXXXXnXpXXXXXXXXXX-633-358.png)
 
-![流程](https://img.alicdn.com/tps/TB1nBf1NXXXXXagapXXXXXXXXXX-520-371.png)
+`WAA` is a brand new relatively independent interface system, with higher processing rights for audio files and more professional built-in audio effects. It is the recommended interface of W3C, which can professionally handle "sound speed, volume, environment, sound color visualization, High frequency, sound direction and other requirements, the following figure describes the use of WAA.
 
-其中Source代表一个音频源，Destination代表最终的输出，多个Source合成出了Destination。
-源代码：[/src/unit/music.js](https://github.com/Binaryify/vue-tetris/blob/master/src/unit/music.js) 实现了ajax加载mp3，并转为WAA，控制播放的过程。
+[Process] (https://img.alicdn.com/tps/TB1nBf1NXXXXXagapXXXXXXXXXX-520-371.png)
 
-`WAA` 在各个浏览器的最新2个版本下的支持情况（[CanIUse](http://caniuse.com/#search=webaudio)）
+Source represents an audio source, Destination represents the final output, and multiple Sources synthesize Destination.
+Source code: [/src/unit/music.js] (https://github.com/Binaryify/vue-tetris/blob/master/src/unit/music.js) Implemented ajax to load mp3 and convert to WAA , control the process of playing.
 
-![浏览器兼容](https://img.alicdn.com/tps/TB15z4VOVXXXXahaXXXXXXXXXXX-679-133.png)
+`WAA` Support for the latest 2 versions of each browser ([CanIUse](http://caniuse.com/#search=webaudio))
 
-可以看到IE阵营与大部分安卓机不能使用，其他ok。
+![Browser compatible] (https://img.alicdn.com/tps/TB15z4VOVXXXXahaXXXXXXXXXXX-679-133.png)
+
+You can see that the IE camp and most Android machines can not be used, other ok.
 
 
-Web Audio Api 学习资料：
-* [Web API 接口| MDN](https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Audio_API)
-* [Getting Started with Web Audio API](http://www.html5rocks.com/en/tutorials/webaudio/intro/)
+Web Audio Api Learning Materials:
+* [Web API Interface | MDN] (https://developer.mozilla.org/en-us/docs/Web/API/Web_Audio_API)
+* [Getting Started with Web Audio API] (http://www.html5rocks.com/en/tutorials/webaudio/intro/)
 
 ----
 ## 3、游戏在体验上的优化
